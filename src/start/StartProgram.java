@@ -2,16 +2,20 @@ package src.start;
 
 import src.exceptions.Errors;
 import src.interfaces.Flyable;
+import src.aircrafts.AircraftFactory;
 
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.lang.Integer;
+import java.util.*;
 
 public class StartProgram
 {
+	private static AircraftFactory aircraftFactory;
 
     public static void main(String[] args) 
     {
+    	aircraftFactory = new AircraftFactory();
 		try
 		{
 			BufferedReader br = checkOpenFile(args);
@@ -50,15 +54,13 @@ public class StartProgram
 		if (params.length != 5)
 			throw new Errors("Line with Aircraft params must have 5 params. Type, Name, Longtitude, Latitude, Height", line);
 
+		Flyable ret = null;
 		String type = params[0];
 		String name = params[1];
 		int longtitude = parceNumber(params[2]);
 		int latitude = parceNumber(params[3]);
 		int height = parceNumber(params[4]);
 
-		if (!type.equals("Baloon") && !type.equals("JetPlane") && !type.equals("Helicopter"))
-			throw new Errors("Type " + type + " is forbidden.\nYou can set type one of this: Baloon, JetPlane, Helicopter", line);
-		
 		if (longtitude < 0)
 			throw new Errors("Longtitude " + params[2] + " is forbidden.\nYou can set only positive integer number", line);
 
@@ -68,7 +70,12 @@ public class StartProgram
 		if (height < 0 || height > 100)
 			throw new Errors("Height " + params[4] + " is forbidden.\nYou can set integer number 0-100", line);
 
-		return (null);
+		ret = aircraftFactory.newAircraft(type, name, latitude, longtitude, height);
+		if (ret == null)
+			throw new Errors("Type " + type + " is forbidden.\nYou can set type one of this: Baloon, JetPlane, Helicopter", line);
+
+		System.out.println("add +" + type);
+		return (ret);
 	}
 
 	private static void checkValidFile(BufferedReader br) throws Exception
@@ -76,6 +83,7 @@ public class StartProgram
 		int counterLines = 1;
 		int counterChange;
 		String buf = br.readLine();
+		ArrayList<Flyable> aircrafts = new ArrayList<Flyable>();
 
 		checkFirstLine(buf);
 		if (!isOnlyDigits(buf) || (counterChange = parceNumber(buf)) < 0)
@@ -83,7 +91,7 @@ public class StartProgram
 		
 		while ((buf = br.readLine()) != null)
 		{
-			parceLine(buf.split(" "), counterLines++);
+			aircrafts.add(parceLine(buf.split(" "), counterLines++));
 		}
 	}
 

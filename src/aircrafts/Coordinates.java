@@ -6,7 +6,7 @@ public class Coordinates
     private int latitude;
     private int height;
 
-    private Coordinates(int longitude, int latitude, int height)
+    Coordinates(int longitude, int latitude, int height)
     {
         // super(null, null);
     }
