@@ -1,6 +1,7 @@
 package src.start;
 
 import src.exceptions.Errors;
+import src.interfaces.Flyable;
 
 import java.io.FileReader;
 import java.io.BufferedReader;
@@ -34,42 +35,59 @@ public class StartProgram
 		int ret = -1;
 		Integer k;
 
-		System.out.println(str + " -str;");
-
-
 		try
 		{
 			k = new Integer(str);
 			ret = k.intValue();
-			// ret = Integer.parceInt(str);
 		}
 		catch (NumberFormatException e)
 		{}
 		return (ret);
 	}
 
-	private String parceType(String str)
+	private static Flyable parceLine(String[] params, int line) throws Exception
 	{
+		if (params.length != 5)
+			throw new Errors("Line with Aircraft params must have 5 params. Type, Name, Longtitude, Latitude, Height", line);
+
+		String type = params[0];
+		String name = params[1];
+		int longtitude = parceNumber(params[2]);
+		int latitude = parceNumber(params[3]);
+		int height = parceNumber(params[4]);
+
+		if (!type.equals("Baloon") && !type.equals("JetPlane") && !type.equals("Helicopter"))
+			throw new Errors("Type " + type + " is forbidden.\nYou can set type one of this: Baloon, JetPlane, Helicopter", line);
+		
+		if (longtitude < 0)
+			throw new Errors("Longtitude " + params[2] + " is forbidden.\nYou can set only positive integer number", line);
+
+		if (latitude < 0)
+			throw new Errors("Latitude " + params[3] + " is forbidden.\nYou can set only positive integer number", line);
+
+		if (height < 0 || height > 100)
+			throw new Errors("Height " + params[4] + " is forbidden.\nYou can set integer number 0-100", line);
+
 		return (null);
 	}
 
 	private static void checkValidFile(BufferedReader br) throws Exception
 	{
+		int counterLines = 1;
 		int counterChange;
 		String buf = br.readLine();
 
 		checkFirstLine(buf);
 		if (!isOnlyDigits(buf) || (counterChange = parceNumber(buf)) < 0)
-			throw new Errors("Error: First line must have only positive integer number");
+			throw new Errors("Line must have only positive integer number", 0);
 		
 		while ((buf = br.readLine()) != null)
 		{
-			String params[] = buf.split(" ");
-			for (String str : params) {
-				System.out.println(str);
-			}
+			parceLine(buf.split(" "), counterLines++);
 		}
 	}
+
+
 
 	private static BufferedReader checkOpenFile(String[] args) throws Exception
 	{

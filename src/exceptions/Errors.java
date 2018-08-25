@@ -9,6 +9,11 @@ public class Errors extends Exception
         this.message = message;
     }
 
+    public Errors(String message, int line) throws Exception
+    {
+        this.message = "Error: Line " + line + ". " + message;
+    }
+
     public Errors() throws Exception
     {
         this.message = "Error";
