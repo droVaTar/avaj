@@ -4,9 +4,11 @@ import src.exceptions.Errors;
 
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.lang.Integer;
 
 public class StartProgram
 {
+
     public static void main(String[] args) 
     {
 		try
@@ -27,22 +29,46 @@ public class StartProgram
 		System.out.println("END");
 	}
 
+	private static int parceNumber(String str)
+	{
+		int ret = -1;
+		Integer k;
+
+		System.out.println(str + " -str;");
+
+
+		try
+		{
+			k = new Integer(str);
+			ret = k.intValue();
+			// ret = Integer.parceInt(str);
+		}
+		catch (NumberFormatException e)
+		{}
+		return (ret);
+	}
+
+	private String parceType(String str)
+	{
+		return (null);
+	}
+
 	private static void checkValidFile(BufferedReader br) throws Exception
 	{
-		String inside_file = "";
+		int counterChange;
 		String buf = br.readLine();
-		checkFirstLine(buf);
-		inside_file += buf + "\n";
 
+		checkFirstLine(buf);
+		if (!isOnlyDigits(buf) || (counterChange = parceNumber(buf)) < 0)
+			throw new Errors("Error: First line must have only positive integer number");
+		
 		while ((buf = br.readLine()) != null)
 		{
-			inside_file += buf;
-			if (isOnlyDigits(buf))
-				inside_file += "true\n";
-			else
-				inside_file += "false\n";
+			String params[] = buf.split(" ");
+			for (String str : params) {
+				System.out.println(str);
+			}
 		}
-		System.out.println(inside_file);
 	}
 
 	private static BufferedReader checkOpenFile(String[] args) throws Exception
