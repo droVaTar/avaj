@@ -8,7 +8,6 @@ public class Coordinates
 
     Coordinates(int longitude, int latitude, int height)
     {
-        // super(null, null);
     }
 
     public int getLongitude()

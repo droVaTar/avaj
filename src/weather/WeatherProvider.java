@@ -5,7 +5,7 @@ import src.aircrafts.Coordinates;
 public class WeatherProvider
 {
    private WeatherProvider wheatherProvider;
-   private String[] wheather;
+   private String[] wheather = {"SUN", "RAIN", "FOG", "SNOW"};
 
    private WeatherProvider()
    {

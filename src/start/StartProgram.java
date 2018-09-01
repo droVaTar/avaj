@@ -80,7 +80,6 @@ public class StartProgram
 
 	private static void checkValidFile(BufferedReader br) throws Exception
 	{
-		int counterLines = 1;
 		int counterChange;
 		String buf = br.readLine();
 		ArrayList<Flyable> aircrafts = new ArrayList<Flyable>();
@@ -89,9 +88,10 @@ public class StartProgram
 		if (!isOnlyDigits(buf) || (counterChange = parceNumber(buf)) < 0)
 			throw new Errors("Line must have only positive integer number", 0);
 		
-		while ((buf = br.readLine()) != null)
+		for (int counterLines = 1; (buf = br.readLine()) != null; counterLines++)
 		{
-			aircrafts.add(parceLine(buf.split(" "), counterLines++));
+			aircrafts.add(parceLine(buf.split(" "), counterLines));
+			aircrafts.get(counterLines - 1).updateConditions();
 		}
 	}
 
