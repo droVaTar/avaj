@@ -4,22 +4,29 @@ import src.aircrafts.Coordinates;
 
 public class WeatherProvider
 {
-   private WeatherProvider wheatherProvider;
-   private String[] wheather = {"SUN", "RAIN", "FOG", "SNOW"};
+   private static WeatherProvider weatherProvider;
+   private String[] weather = {"SUN", "RAIN", "FOG", "SNOW"};
 
    private WeatherProvider()
    {
 
    }
 
-   public WeatherProvider getProvider()
+   public static WeatherProvider getProvider()
    {
-       return (this.wheatherProvider);
+      if (this.weatherProvider == null)
+         this.weatherProvider = new WeatherProvider();
+
+      return (this.weatherProvider);
    }
 
    public String getCurrentWeather(Coordinates coordinates)
    {
-      return (null);
+      int index;
+
+      index = (coordinates.getLongtitude() + coordinates.getLatitude()) * coordinates.getHeight();
+      index = index % 4;
+      return (weather[index]);
    }
 
 }

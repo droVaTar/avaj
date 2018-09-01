@@ -67,8 +67,11 @@ public class StartProgram
 		if (latitude < 0)
 			throw new Errors("Latitude " + params[3] + " is forbidden.\nYou can set only positive integer number", line);
 
-		if (height < 0 || height > 100)
-			throw new Errors("Height " + params[4] + " is forbidden.\nYou can set integer number 0-100", line);
+		if (height < 0)
+			throw new Errors("Height " + params[4] + " is forbidden.\nYou can set only positive integer number", line);
+
+		if (height > 100)
+			height = 100;
 
 		ret = aircraftFactory.newAircraft(type, name, latitude, longtitude, height);
 		if (ret == null)
