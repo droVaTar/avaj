@@ -2,13 +2,21 @@ package src.weather;
 
 public class WeatherTower extends Tower
 {
-    public String getWeather(Coordinates coordinates)
-    {
-        return (WeatherProvider.getProvider().getCurrentWeather(coordinates));
-    }
+	WeatherProvider weather;
 
-    private void changeWeather()
-    {
-        
-    }
+	WeatherTower ()
+	{
+		super();
+		weather = WeatherProvider.getProvider();
+	}
+
+	public String getWeather(Coordinates coordinates)
+	{
+		return (weather.getCurrentWeather(coordinates));
+	}
+
+	private void changeWeather()
+	{
+		
+	}
 }
