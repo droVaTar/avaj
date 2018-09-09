@@ -5,7 +5,7 @@ import src.interfaces.Flyable;
 
 public class JetPlane extends Aircraft implements Flyable
 {
-	private WeatherTower wheatherTower;
+	private WeatherTower weatherTower;
 
 	JetPlane(String name, Coordinates coordinates)
 	{
@@ -14,9 +14,9 @@ public class JetPlane extends Aircraft implements Flyable
 
 	public void updateConditions()
 	{
-		String	weather = wheatherTower.getWeather(coordinates);
+		String	weather = weatherTower.getWeather(coordinates);
 
-		int		longtitude = coordinates.getLongtitude();
+		int		longtitude = coordinates.getLongitude();
 		int		latitude = coordinates.getLatitude();
 		int		height = coordinates.getHeight();
 
@@ -40,7 +40,7 @@ public class JetPlane extends Aircraft implements Flyable
 		else
 		{
 			System.out.println("Error weather name");
-			Systme.exit();
+			System.exit(0);
 		}
 
 		if (height > 100)

@@ -26,10 +26,11 @@ public class StartProgram
 			System.out.print("Error my: ");
 			e.printMessage();
 		}
-		catch (Exception e) 
+		catch (Exception ee) 
 		{
 			System.out.print("Error standart: ");
-			System.out.println(e);
+			ee.printStackTrace();
+			// System.out.println(e);
 		}
 		System.out.println("END");
 	}
@@ -94,11 +95,9 @@ public class StartProgram
 		for (int counterLines = 1; (buf = br.readLine()) != null; counterLines++)
 		{
 			aircrafts.add(parceLine(buf.split(" "), counterLines));
-			aircrafts.get(counterLines - 1).updateConditions();
+			// aircrafts.get(counterLines - 1).updateConditions();
 		}
 	}
-
-
 
 	private static BufferedReader checkOpenFile(String[] args) throws Exception
 	{

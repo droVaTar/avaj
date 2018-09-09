@@ -1,5 +1,7 @@
 package src.weather;
 
+import src.aircrafts.Coordinates;
+
 public class WeatherTower extends Tower
 {
 	WeatherProvider weather;
